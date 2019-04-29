@@ -1,0 +1,36 @@
+Meeting 4/2
+- Discussed options for implementing backed database
+	settled on using firebase database
+- Talked about changing color scheme from orange to green (for Joanne’s eyes)
+- Talked about removing certain screens related to user activities
+- Decided on storing certain things (“nickname”, picture etc.) on the user’s phone to reduce backend database calls
+- Talked about potentially changing the swipe mechanics for moving around the app
+- Talked about how to zoom the map
+- Talked about different api’s to use (google maps, chats, etc)
+- Set up next meeting time (4/4)
+
+Meeting 4/4
+- Changed the app color to green overall
+- Talked about when to meet up to work on the project
+	everyone’s having real busy weeks
+- Decided to change map radius to not include exact number, still a sliding bar
+- Decided to remove settings from app for the time being (not enough settings to matter)
+- Decided to remove the private chat option
+- Defined classes (user, chat, message)
+- Decided to stick with the swipe mechanics for moving around the app
+- Set up next meeting time (4/9)
+
+Meeting 4/9
+- Decided on how to store user id’s (using android device serial number)
+- Talked about dividing up work amongst each other
+- Decided on this weekend to work in person as a group
+- Talked about rearranging the layout on some of the pages to better use screen space
+- Decided to not support night mode (sad)
+- Set up next meeting time (4/11)
+
+Meeting 4/11
+- Set up firebase database
+- Talked about filling out the project board on github
+- Decided to remove the profile page/related settings
+- Actually filled out the project board on github
+- Decided on actual colors to use in the app implementation

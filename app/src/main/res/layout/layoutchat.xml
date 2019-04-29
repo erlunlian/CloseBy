@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    >
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageview_favorite"
+            android:layout_width="54dp"
+            android:layout_height="52dp"
+            android:layout_gravity="bottom|right"
+            android:background="@drawable/smiley" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textview_book_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingLeft="8dp"
+        android:paddingTop="4dp"
+        android:paddingRight="8dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="Are You My Mother" />
+
+    <TextView
+        android:id="@+id/textview_book_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textSize="14sp"
+        tools:text="Dr. Seuss" />
+
+    <TextView
+        android:id="@+id/distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        tools:text="distance" />
+
+    <TextView
+        android:id="@+id/show_key"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#00000000"
+        android:textSize="1sp"
+        tools:text="key" />
+
+</LinearLayout>

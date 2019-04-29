@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "824124153236",
+    "firebase_url": "https://closeby-a1c23.firebaseio.com",
+    "project_id": "closeby-a1c23",
+    "storage_bucket": "closeby-a1c23.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824124153236:android:76afcf73248c724e",
+        "android_client_info": {
+          "package_name": "com.example.closeby"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "824124153236-csprhcoqbkt639brqvlcn4o5k9j2vkko.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqRdf9Zxi_dEcQvDUiWLL8h47c926fzeM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "824124153236-csprhcoqbkt639brqvlcn4o5k9j2vkko.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824124153236:android:7d51a038de118650",
+        "android_client_info": {
+          "package_name": "com.example.closebyswipe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "824124153236-fqd7ppn109vip9vug6453nkv3gugks2q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.closebyswipe",
+            "certificate_hash": "18944481f4a65574656c43c5db85c65f2458e9e0"
+          }
+        },
+        {
+          "client_id": "824124153236-csprhcoqbkt639brqvlcn4o5k9j2vkko.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqRdf9Zxi_dEcQvDUiWLL8h47c926fzeM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "824124153236-csprhcoqbkt639brqvlcn4o5k9j2vkko.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
