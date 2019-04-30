@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -17,12 +18,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -33,12 +38,20 @@ import java.io.IOException;
 
 public class Profile extends AppCompatActivity {
     public static final int GET_FROM_GALLERY = 3;
+    private FirebaseDatabase mdbase;
+    private DatabaseReference dbref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        TextView profid = (TextView) findViewById(R.id.profileID);
+        profid.setText(android.os.Build.SERIAL);
+        mdbase = FirebaseDatabase.getInstance();
+
+        dbref = mdbase.getReference();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -48,11 +61,24 @@ public class Profile extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        StorageReference imRef = FirebaseStorage.getInstance().getReference().child("images");
-        ImageView image = (ImageView)findViewById(R.id.profpic);
-        GlideApp.with(getApplicationContext() /* context */)
-                .load(imRef.child("0"))
-                .into(image);
+
+        dbref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                StorageReference imRef = FirebaseStorage.getInstance().getReference().child("images");
+                User u = dataSnapshot.child("users").child(android.os.Build.SERIAL).getValue(User.class);
+                ImageView image = (ImageView)findViewById(R.id.profpic);
+                GlideApp.with(getApplicationContext() /* context */)
+                        .load(imRef.child(u.getUserPicture()))
+                        .into(image);
+                image.setScaleType(ImageView.ScaleType.FIT_XY);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaserror) {}
+
+        });
+
 
         Button upload = (Button) findViewById(R.id.upload);
         upload.setOnClickListener(new View.OnClickListener() {

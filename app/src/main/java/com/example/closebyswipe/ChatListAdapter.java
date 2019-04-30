@@ -128,7 +128,7 @@ public class ChatListAdapter extends BaseAdapter {
         GlideApp.with(convertView.getContext() /* context */)
                 .load(storageReference)
                 .into(chatPic);
-
+        chatPic.setScaleType(ImageView.ScaleType.FIT_XY);
         distance.setText(calculateDistance(thechat.getLongitude(), thechat.getLatitude()) + " miles away");
 
     }

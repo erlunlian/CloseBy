@@ -14,6 +14,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -25,6 +28,7 @@ public class ChatsAdapter extends BaseAdapter {
     private final ArrayList<Chat> chats;
     private double curLong;
     private double curLat;
+    StorageReference imRef = FirebaseStorage.getInstance().getReference().child("chatimages");
 
     // 1
     public ChatsAdapter(Context context, ArrayList<Chat> chats) {
@@ -59,7 +63,7 @@ public class ChatsAdapter extends BaseAdapter {
         // 2
         if (convertView == null) {
             final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-            convertView = layoutInflater.inflate(R.layout.layoutchat, null);
+            convertView = layoutInflater.inflate(R.layout.layoutofchatlist, null);
         }
 
         double longitude = thechat.getLongitude();
@@ -98,11 +102,18 @@ public class ChatsAdapter extends BaseAdapter {
         final TextView nameTextView = (TextView) convertView.findViewById(R.id.textview_book_name);
         final TextView authorTextView = (TextView) convertView.findViewById(R.id.textview_book_author);
         final TextView distance = (TextView) convertView.findViewById(R.id.distance);
+        final ImageView chatPic = (ImageView) convertView.findViewById(R.id.imageview_favorite);
 
         // 4
         nameTextView.setText(thechat.getName());
         authorTextView.setText(thechat.getDescription());
         keyTextView.setText(thechat.getKey());
+        StorageReference storageReference = imRef.child(thechat.getImageName());
+        GlideApp.with(convertView.getContext() /* context */)
+                .load(storageReference)
+                .into(chatPic);
+        chatPic.setScaleType(ImageView.ScaleType.FIT_XY);
+
         distance.setText(calculateDistance(thechat.getLongitude(), thechat.getLatitude()) + " miles away");
     }
 

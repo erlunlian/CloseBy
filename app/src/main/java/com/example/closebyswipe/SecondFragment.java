@@ -103,7 +103,9 @@ public class SecondFragment extends Fragment {
 
                 if (u == null) {
                     dbref.child("users").child(android.os.Build.SERIAL).setValue(user);
+                    u = user;
                 }
+
                 ImageButton im = (ImageButton) rootView.findViewById(R.id.imageButton);
 
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/" + u.getUserPicture());
