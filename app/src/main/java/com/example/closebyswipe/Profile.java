@@ -15,11 +15,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -45,6 +48,11 @@ public class Profile extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        StorageReference imRef = FirebaseStorage.getInstance().getReference().child("images");
+        ImageView image = (ImageView)findViewById(R.id.profpic);
+        GlideApp.with(getApplicationContext() /* context */)
+                .load(imRef.child("0"))
+                .into(image);
 
         Button upload = (Button) findViewById(R.id.upload);
         upload.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +84,7 @@ public class Profile extends AppCompatActivity {
                             bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                             ImageView pro = (ImageView) findViewById(R.id.profpic);
                             pro.setImageBitmap(bitmap);
-                            uploadImage(selectedImage);
+                            uploadImage(selectedImage, android.os.Build.SERIAL + ".png");
                         } catch (FileNotFoundException e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
@@ -95,7 +103,7 @@ public class Profile extends AppCompatActivity {
         }
     }
 
-    private void uploadImage(Uri filePath) {
+    private void uploadImage(Uri filePath, String filename) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
         if(filePath != null)
@@ -103,8 +111,12 @@ public class Profile extends AppCompatActivity {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
+            final DatabaseReference mDatabase;
+            mDatabase = FirebaseDatabase.getInstance().getReference();
+            String picString = createString();
+            StorageReference ref = storageReference.child("images/" + picString);
+            mDatabase.child("users").child(android.os.Build.SERIAL).child("userPicture").setValue(picString);
 
-            StorageReference ref = storageReference.child("images/uploadtest.png");
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -128,6 +140,31 @@ public class Profile extends AppCompatActivity {
                             progressDialog.setMessage("Uploaded "+(int)progress+"%");
                         }
                     });
+
+
         }
+    }
+    private String createString() {
+
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
+
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(20);
+
+        for (int i = 0; i < 20; i++) {
+
+            // generate a random number between
+            // 0 to AlphaNumericString variable length
+            int index
+                    = (int)(AlphaNumericString.length()
+                    * Math.random());
+
+            // add Character one by one in end of sb
+            sb.append(AlphaNumericString
+                    .charAt(index));
+        }
+        return sb.toString();
     }
 }

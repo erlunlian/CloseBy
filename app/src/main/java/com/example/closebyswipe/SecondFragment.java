@@ -83,14 +83,10 @@ public class SecondFragment extends Fragment {
         //TODO: Only add user if not present
         final User user = new User(android.os.Build.SERIAL);
 
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("test.png");
 
 
         ImageView image = (ImageView)rootView.findViewById(R.id.imageView);
         ImageButton im = (ImageButton) rootView.findViewById(R.id.imageButton);
-        GlideApp.with(getActivity().getApplicationContext() /* context */)
-                .load(storageReference)
-                .into(im);
 
         im.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +104,13 @@ public class SecondFragment extends Fragment {
                 if (u == null) {
                     dbref.child("users").child(android.os.Build.SERIAL).setValue(user);
                 }
+                ImageButton im = (ImageButton) rootView.findViewById(R.id.imageButton);
+
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/" + u.getUserPicture());
+                GlideApp.with(getActivity().getApplicationContext() /* context */)
+                        .load(storageReference)
+                        .into(im);
+
             }
 
             @Override
@@ -128,7 +131,6 @@ public class SecondFragment extends Fragment {
                     chats.add(chat.getValue(Chat.class));
                 }
                 System.out.println("chats are " + chats);
-
 
 
 

@@ -17,6 +17,7 @@ public class Chat implements Serializable {
     private double latitude;
     private String key;
     private double radius;
+    private String imageName;
    // public long longitude;
     //public long latitude;
 
@@ -24,7 +25,7 @@ public class Chat implements Serializable {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Chat(String name, String description, double longitude, double latitude, String key, double radius) {
+    public Chat(String name, String description, double longitude, double latitude, String key, double radius, String imageName) {
         this.key = key;
         this.name =name;
         this.description = description;
@@ -35,6 +36,7 @@ public class Chat implements Serializable {
         this.longitude = longitude;
         this.latitude = latitude;
         this.radius = radius;
+        this.imageName = imageName;
     }
 
     public void addUser(User user) {
@@ -73,4 +75,14 @@ public class Chat implements Serializable {
     }
     public double getRadius() {return radius;}
 
+    public String getImageName() {
+        if(imageName == null) {
+            return "0.png";
+        }
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
 }

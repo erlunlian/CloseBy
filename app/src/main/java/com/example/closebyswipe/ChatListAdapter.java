@@ -13,7 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -26,6 +30,7 @@ public class ChatListAdapter extends BaseAdapter {
     private View image;
     private double curLong;
     private double curLat;
+    StorageReference imRef = FirebaseStorage.getInstance().getReference().child("chatimages");
 
     // 1
     public ChatListAdapter(Context context, ArrayList<Chat> chats) {
@@ -113,12 +118,19 @@ public class ChatListAdapter extends BaseAdapter {
         final TextView nameTextView = (TextView) convertView.findViewById(R.id.textview_book_name);
         final TextView authorTextView = (TextView) convertView.findViewById(R.id.textview_book_author);
         final TextView distance = (TextView) convertView.findViewById(R.id.distance);
-
+        final ImageView chatPic = (ImageView) convertView.findViewById(R.id.imageview_favorite);
         // 4
         nameTextView.setText(thechat.getName());
         authorTextView.setText(thechat.getDescription());
         keyTextView.setText(thechat.getKey());
+        StorageReference storageReference = imRef.child(thechat.getImageName());
+        System.out.println("A CHECK!: " + thechat.getImageName());
+        GlideApp.with(convertView.getContext() /* context */)
+                .load(storageReference)
+                .into(chatPic);
+
         distance.setText(calculateDistance(thechat.getLongitude(), thechat.getLatitude()) + " miles away");
+
     }
 
     public String calculateDistance(double lon1, double lat1) {

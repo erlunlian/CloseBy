@@ -6,10 +6,12 @@ public class User {
 
         private String mId;
         private ArrayList<Chat> userChatList;
+        private String userPicture;
 
         public User (User u) {
             userChatList = u.getChatList();
             mId = u.getId();
+            userPicture = "0";
         }
         public User() {
             userChatList = new ArrayList<Chat>();
@@ -38,4 +40,12 @@ public class User {
         public void setId(String id) {
             mId = id;
         }
+
+    public String getUserPicture() {
+        return userPicture;
+    }
+
+    public void setUserPicture(String userPicture) {
+        this.userPicture = userPicture;
+    }
 }
