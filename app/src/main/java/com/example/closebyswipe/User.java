@@ -11,7 +11,7 @@ public class User {
         public User (User u) {
             userChatList = u.getChatList();
             mId = u.getId();
-            userPicture = "0";
+            userPicture = "0.png";
         }
         public User() {
             userChatList = new ArrayList<Chat>();
@@ -42,6 +42,9 @@ public class User {
         }
 
     public String getUserPicture() {
+            if(userPicture == null) {
+                return "0.png";
+            }
         return userPicture;
     }
 
