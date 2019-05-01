@@ -53,6 +53,7 @@
         android:layout_marginEnd="96dp"
         android:layout_marginRight="96dp"
         android:ems="10"
+        android:hint="Chat Radius (miles)"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descriptionText" />

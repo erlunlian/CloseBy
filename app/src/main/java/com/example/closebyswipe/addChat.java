@@ -114,6 +114,8 @@ public class addChat extends AppCompatActivity {
                     alertDialog.show();
                 }
 
+                else if ()
+
                 else {
                     Chat chat = new Chat(nameText.getText().toString(), descriptionText.getText().toString(), longitude, latitude, sb.toString(), Integer.parseInt(radiusText.getText().toString()), picString);
 
