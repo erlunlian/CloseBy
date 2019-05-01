@@ -54,6 +54,7 @@ public class addChat extends AppCompatActivity {
         final EditText descriptionText = findViewById(R.id.descriptionText);
         final EditText radiusText = findViewById(R.id.radiusText);
         final Button addButton = findViewById(R.id.addButton);
+        final EditText radius = findViewById(R.id.radiusText);
         Intent myIntent = getIntent(); // gets the previously created intent
         final double longitude = myIntent.getDoubleExtra("longitudeKey",0); // will return "FirstKeyValue"
         final double latitude= myIntent.getDoubleExtra("latitudeKey",0);
@@ -101,10 +102,11 @@ public class addChat extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                if (nameText.getText().toString().equals("") || descriptionText.getText().toString().equals("")) {
+                // Checks if name description radius are added
+                if (nameText.getText().toString().equals("") || descriptionText.getText().toString().equals("") || radius.getText().toString().equals("")) {
                     AlertDialog alertDialog = new AlertDialog.Builder(addChat.this).create();
                     alertDialog.setTitle("Error!");
-                    alertDialog.setMessage("Please add a name and description for the group chat.");
+                    alertDialog.setMessage("Please add a name, description and discovery radius for your group chat.");
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
@@ -113,8 +115,6 @@ public class addChat extends AppCompatActivity {
                             });
                     alertDialog.show();
                 }
-
-                else if ()
 
                 else {
                     Chat chat = new Chat(nameText.getText().toString(), descriptionText.getText().toString(), longitude, latitude, sb.toString(), Integer.parseInt(radiusText.getText().toString()), picString);
