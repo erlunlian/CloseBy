@@ -42,7 +42,7 @@ import static android.support.v4.os.LocaleListCompat.create;
 public class addChat extends AppCompatActivity {
     public static final int GET_FROM_GALLERY = 3;
     String chatID = "";
-    String picString = "";
+    String picString = "0.png";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,11 +129,8 @@ public class addChat extends AppCompatActivity {
                     System.out.println("longitude and latitude here" + longitude + latitude);
                     finish();
                 }
-
             }
         });
-
-
 
     }
     @Override
