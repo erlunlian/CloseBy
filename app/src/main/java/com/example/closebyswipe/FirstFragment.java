@@ -1,6 +1,7 @@
 package com.example.closebyswipe;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -9,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +31,7 @@ import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -51,7 +56,7 @@ public class FirstFragment extends Fragment {
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 // Get data
 
-                ArrayList<Chat> chatList = new ArrayList<Chat>();
+                final ArrayList<Chat> chatList = new ArrayList<Chat>();
                 long size = dataSnapshot.child("chats").getChildrenCount();
                 Iterable<DataSnapshot> chats = dataSnapshot.child("chats").getChildren();
                 for (DataSnapshot chat: chats) {
@@ -61,10 +66,31 @@ public class FirstFragment extends Fragment {
                     }
                 }
                 System.out.println("chats are " + chatList);
+                Collections.sort(chatList);
                 GridView gridView = (GridView) v.findViewById(R.id.gridview);
 
                 ChatsAdapter chatsAdapter = new ChatsAdapter(getContext(), chatList);
                 gridView.setAdapter(chatsAdapter);
+
+                gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+                    public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                                   int position, long arg3) {
+                        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+                        Chat c= chatList.get(position);
+                        alertDialog.setTitle("Radius of chat is " + c.getRadius() + " miles.");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                        return true;
+                    }
+                });
+
+
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

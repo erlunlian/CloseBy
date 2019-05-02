@@ -1,13 +1,17 @@
 package com.example.closebyswipe;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.Image;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.provider.Settings.Secure;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class Chat implements Serializable {
+public class Chat implements Serializable, Comparable<Chat> {
     private int messageSize;
     private String name;
     private String description;
@@ -18,12 +22,15 @@ public class Chat implements Serializable {
     private String key;
     private double radius;
     private String imageName;
+    Context context;
    // public long longitude;
     //public long latitude;
 
     public Chat() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
+
+
 
     public Chat(String name, String description, double longitude, double latitude, String key, double radius, String imageName) {
         this.key = key;
@@ -37,6 +44,24 @@ public class Chat implements Serializable {
         this.latitude = latitude;
         this.radius = radius;
         this.imageName = imageName;
+    }
+
+    @Override
+    public int compareTo(Chat c) {
+
+    if (this.members == null || c.members == null) {
+        return 0;
+    }
+    else if (this.members.size() > c.members.size()) {
+        System.out.println("this greater");
+        return 1;
+    }
+    else if (this.members.size() == c.members.size()) {
+        return 0;
+    }
+
+        System.out.println("c greater");
+        return -1;
     }
 
     public void addUser(User user) {

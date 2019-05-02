@@ -1,12 +1,16 @@
 package com.example.closebyswipe;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,15 +28,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.os.SystemClock.sleep;
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class chatView extends AppCompatActivity {
 
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
-
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        context = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_view);
         ArrayList<Message> g = new ArrayList<Message>();
@@ -102,6 +108,59 @@ public class chatView extends AppCompatActivity {
             public void run() {
                 // Select the last row so it will scroll into view...
                 listView.setSelection(messages.size() - 1);
+            }
+        });
+
+
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                Message entry= messages.get(position);
+                final String usersId = entry.getUserId();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Do you want to report this user?");
+                builder.setItems(new CharSequence[]
+                                {"Report", "Cancel"},
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // The 'which' argument contains the index position
+                                // of the selected item
+                                switch (which) {
+                                    case 0:
+                                        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                                + "0123456789"
+                                                + "abcdefghijklmnopqrstuvxyz";
+
+                                        // create StringBuffer size of AlphaNumericString
+                                        StringBuilder sb = new StringBuilder(20);
+
+                                        for (int i = 0; i < 20; i++) {
+
+                                            // generate a random number between
+                                            // 0 to AlphaNumericString variable length
+                                            int index
+                                                    = (int) (AlphaNumericString.length()
+                                                    * Math.random());
+
+                                            // add Character one by one in end of sb
+                                            sb.append(AlphaNumericString
+                                                    .charAt(index));
+                                        }
+                                        dbref.child("reportedUsers").child(usersId).child(sb.toString()).setValue("reported");
+                                        dialog.dismiss();
+                                        break;
+                                    case 1:
+                                        dialog.dismiss();
+                                        break;
+
+                                }
+                            }
+                        });
+                builder.create().show();
             }
         });
     }
